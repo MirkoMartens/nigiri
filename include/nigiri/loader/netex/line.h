@@ -10,8 +10,10 @@ struct line {
   // std::string_view global_id;  // example: de:rmv:00004142 -> No idea why tho
   std::string_view name;
   std::string_view transport_mode;
+  provider_idx_t line_operator;
 };
 
-void parse_lines(const pugi::xml_document& doc,
-                 hash_map<std::string_view, line>& line_map);
+void read_lines(const pugi::xml_document& doc,
+                hash_map<std::string_view, line>& line_map,
+                hash_map<std::string_view, provider_idx_t>& operatorMap);
 }  // namespace nigiri::loader::netex

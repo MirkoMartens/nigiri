@@ -23,7 +23,7 @@ struct service_journey_pattern {
   std::string_view end_point_id;
 };
 
-void parse_journey_patterns(
+void read_journey_patterns(
     const pugi::xml_document& doc,
     hash_map<std::string_view, service_journey_pattern>& journeys_map);
 }  // namespace nigiri::loader::netex

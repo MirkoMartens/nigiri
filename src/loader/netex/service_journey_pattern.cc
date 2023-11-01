@@ -8,7 +8,9 @@ void parse_journey_patterns(
     hash_map<std::string_view, service_journey_pattern>& journeys_map,
     hash_map<std::string_view, line>& lines_map,
     hash_map<std::string_view, scheduled_stop_point>& ssp_map) {
+
   for (const auto& sjp : doc.select_nodes("//ServiceJourneyPattern")) {
+
     auto id = sjp.node().attribute("id").value();
     auto line_name =
         lines_map[sjp.node().select_node("//LineRef").node().value()].name;
@@ -33,7 +35,9 @@ void parse_journey_patterns(
                              .child("ScheduledStopPointRef")
                              .attribute("ref")
                              .value()];
-      // todo check whether found or not
+
+      //   todo should throw an error/debug info if the ssp doesnt exist
+
       auto for_alighting = static_cast<bool>(
           stop_point_xml.node().child("ForAlighting").text().get());
       auto for_boarding = static_cast<bool>(

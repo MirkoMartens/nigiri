@@ -7,7 +7,7 @@ namespace nigiri::loader::netex {
 
 void read_stop_places(const pugi::xml_document& doc,
                       hash_map<std::string_view, stop_place>& stop_map) {
-  // Step 1: Get to site frame
+
   for (auto const s : doc.select_nodes("//StopPlace")) {
 
     auto id = s.node().attribute("id").value();
@@ -34,6 +34,5 @@ void read_stop_places(const pugi::xml_document& doc,
     stop_map.insert(std::make_pair<std::string_view, stop_place>(
         id, {id, name, coords, quay_map}));
   }
-  // Step 2: Read in the stop places & quays and add them if not existent yet
 }
 }  // namespace nigiri::loader::netex
