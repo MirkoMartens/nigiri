@@ -11,8 +11,8 @@
 namespace nigiri::loader::netex {
 
 struct route_operator {
-  std::string longName;
-  std::string shortName;
+  std::string long_name_;
+  std::string short_name_;
 };
 
 // operatorMap maps from operatorID to the short and long name

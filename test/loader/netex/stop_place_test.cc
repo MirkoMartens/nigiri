@@ -87,9 +87,9 @@ TEST(netex, stop_places) {
   read_stop_places(doc, stop_map);
 
   auto test_stop_place = stop_map["DE::StopPlace:300004617_1000::"];
-  ASSERT_EQ(test_stop_place.name, "Rödermark-Ober-Roden Friedhof");
-  ASSERT_EQ(test_stop_place.quays.size(), 2);
+  ASSERT_EQ(test_stop_place.name_, "Rödermark-Ober-Roden Friedhof");
+  ASSERT_EQ(test_stop_place.quays_.size(), 2);
 
-  ASSERT_EQ(test_stop_place.quays["DE::Quay:320461701_1000::"].name,
+  ASSERT_EQ(test_stop_place.quays_["DE::Quay:320461701_1000::"].name_,
             "NWaldacker");
 }

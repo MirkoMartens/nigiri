@@ -3,17 +3,17 @@
 
 namespace nigiri::loader::netex {
 
-void parse_journey_patterns(
+void read_journey_patterns(
     const pugi::xml_document& doc,
     hash_map<std::string_view, service_journey_pattern>& journeys_map,
     hash_map<std::string_view, line>& lines_map,
     hash_map<std::string_view, scheduled_stop_point>& ssp_map) {
 
-  for (const auto& sjp : doc.select_nodes("//ServiceJourneyPattern")) {
+  for (auto const& sjp : doc.select_nodes("//ServiceJourneyPattern")) {
 
     auto id = sjp.node().attribute("id").value();
     auto line_name =
-        lines_map[sjp.node().select_node("//LineRef").node().value()].name;
+        lines_map[sjp.node().select_node("//LineRef").node().value()].name_;
 
     auto start_point_id = sjp.node()
                               .select_node("//StartPointInPatternRef")
@@ -28,7 +28,7 @@ void parse_journey_patterns(
 
     std::vector<stop_point_in_journey> points_in_sequence;
 
-    for (const auto& stop_point_xml :
+    for (auto const& stop_point_xml :
          sjp.node().select_nodes("StopPointInJourneyPattern")) {
       auto stop_point_id = stop_point_xml.node().attribute("id").value();
       auto ssp = ssp_map[stop_point_xml.node()

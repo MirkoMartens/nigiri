@@ -55,12 +55,13 @@ void handle_xml_parse_result(timetable& tt,
   read_stop_places(doc, netex_tt.stop_places);
 
   // 4. ServiceFrame -> Contains all the logic about stops, routes, journeys
-  read_lines(doc, netex_tt.line_map, netex_tt.operatorMap);
+  read_lines(tt, doc, netex_tt.line_map, netex_tt.operatorMap);
   read_scheduled_stop_points(doc, netex_tt.stops_map);
   read_service_links(doc, netex_tt.service_links_map);
   read_site_connections(tt, doc, netex_tt.connection_map);
   read_stop_assignments(doc, netex_tt.stop_assignment_map);
-  read_journey_patterns(doc, netex_tt.journey_patterns);
+  read_journey_patterns(doc, netex_tt.journey_patterns, netex_tt.line_map,
+                        netex_tt.stops_map);
 
   // 5. TimetableFrame, contains the exact timetable info about journeys
   // read_service_journeys(doc, netex_tt.service_journeys);

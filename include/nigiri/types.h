@@ -161,7 +161,7 @@ struct attribute {
 
 struct provider {
   CISTA_COMPARABLE()
-  CISTA_PRINTABLE(provider, "short_name", "long_name")
+  CISTA_PRINTABLE(provider, "short_name", "long_name_")
   string short_name_, long_name_;
   timezone_idx_t tz_{timezone_idx_t::invalid()};
 };

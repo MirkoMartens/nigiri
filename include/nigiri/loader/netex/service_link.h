@@ -6,9 +6,9 @@
 
 namespace nigiri::loader::netex {
 struct service_link {
-  std::string_view id;
-  std::string_view from_point_ref;
-  std::string_view to_point_ref;
+  std::string_view id_;
+  std::string_view from_point_ref_;
+  std::string_view to_point_ref_;
 };
 
 void read_service_links(

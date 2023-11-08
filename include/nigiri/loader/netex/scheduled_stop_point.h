@@ -6,10 +6,10 @@
 
 namespace nigiri::loader::netex {
 struct scheduled_stop_point {
-  std::string_view id;
-  std::string_view name;
+  std::string_view id_;
+  std::string_view name_;
   // std::string_view public_code;
-  std::string_view stop_type;
+  std::string_view stop_type_;
 };
 
 void read_scheduled_stop_points(

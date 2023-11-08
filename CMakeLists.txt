@@ -30,7 +30,9 @@ add_library(gtfsrt ${CMAKE_CURRENT_BINARY_DIR}/generated/gtfsrt/gtfs-realtime.pb
         include/nigiri/loader/netex/line.h
         include/nigiri/loader/netex/service_journey_pattern.h
         include/nigiri/loader/netex/scheduled_stop_point.h
-        include/nigiri/loader/netex/service_journey.h)
+        include/nigiri/loader/netex/service_journey.h
+        include/nigiri/loader/netex/service_link.h
+        include/nigiri/loader/netex/stop_assignment.h)
 target_compile_features(gtfsrt PUBLIC cxx_std_23)
 target_include_directories(gtfsrt SYSTEM PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/generated)
 target_link_libraries(gtfsrt protobuf::libprotobuf)
@@ -87,7 +89,11 @@ add_library(nigiri ${nigiri-files}
         src/loader/netex/line.cc
         src/loader/netex/scheduled_stop_point.cc
         src/loader/netex/service_journey_pattern.cc
-        src/loader/netex/service_journey.cc)
+        src/loader/netex/service_journey.cc
+        src/loader/netex/site_connection.cc
+        include/nigiri/loader/netex/site_connection.h
+        src/loader/netex/service_link.cc
+        src/loader/netex/stop_assignment.cc)
 target_include_directories(nigiri PUBLIC include)
 target_link_libraries(nigiri PUBLIC cista geo utl fmt date miniz date-tz wyhash unordered_dense gtfsrt pugixml)
 target_compile_features(nigiri PUBLIC cxx_std_23)
@@ -113,6 +119,8 @@ add_executable(nigiri-test ${nigiri-test-files}
         test/loader/netex/resource_frame_test.cc
         test/loader/netex/stop_place_test.cc
         test/loader/netex/service_journey_pattern_test.cc
+        test/loader/netex/dummy.cc
+        test/loader/netex/load_timetable_test.cc
 )
 target_link_libraries(nigiri-test nigiri gtest ianatzdb-res nigiri-generated)
 target_compile_options(nigiri-test PRIVATE ${nigiri-compile-options})
