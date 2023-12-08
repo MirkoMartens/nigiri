@@ -18,12 +18,20 @@ struct location {
   location(std::string_view id,
            std::string_view name,
            geo::latlng pos,
-           source_idx_t,
-           location_type,
-           location_idx_t parent,
+           source_idx_t, // Wichtig, wenn wir verschiedene Datensätze(=Source_idx)
+           // oder sogar mehrere Fahrpläne(da die IDs nur eindeutig
+           // sind zusammen mit Source_Idx) mergen.
+           location_type,  // Quays=kTrack, alles andere kStation
+           location_idx_t parent, // Für Quays wahrscheinlich der StopPonit(oder SSP)
            timezone_idx_t,
-           duration_t transfer_time,
-           it_range<vector<location_idx_t>::const_iterator> equivalences);
+           duration_t transfer_time, // Minimale Umstiegszeit, die wir bei einer Location
+           // mindestens einhalten müssen (relevant für logische
+           // Locations, also "Darmstadt Hauptbahnhof", für Quays
+           // kann ich das auf 0 setzen)
+           it_range<vector<location_idx_t>::const_iterator> equivalences); // "Äuivalente Stops fürs Routing". Also zwei
+  // StpoPoints könnten als äquivalent gelten. Also
+  // könnte ich potentiell auch das nutzen statt den Baum
+  // zu flattenen
   location_idx_t l_{location_idx_t::invalid()};
   std::string_view id_;
   std::string_view name_;

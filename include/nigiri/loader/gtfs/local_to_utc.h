@@ -122,7 +122,7 @@ struct conversion_key {
 
 template <typename Consumer>
 void expand_local_to_utc(trip_data const& trip_data,
-                         noon_offset_hours_t const& noon_offsets,
+                         noon_offset_hours_t const& noon_offsets, // Note: This must definitely be changed for Netex
                          timetable const& tt,
                          frequency_expanded_trip&& fet,
                          interval<date::sys_days> const& selection,

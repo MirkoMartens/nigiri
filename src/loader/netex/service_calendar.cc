@@ -63,6 +63,8 @@ void read_service_calendar(
 
     calendar[n.node().child("DayTypeRef").attribute("ref").value()] =
         it->second;
+    // TODO Find out the connection between OperatingPeriod+DayTypeAssignment
+    // and register_bitfield.
   }
 }
 

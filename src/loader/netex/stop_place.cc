@@ -30,7 +30,7 @@ void read_stop_places(const pugi::xml_document& doc,
       quay_map.insert(std::make_pair<std::string_view, quay>(
           q_id, {q_id, q_name, q_coords}));
     }
-    // TODO for later: Check whether level is important or not
+    // TODO for later: Right now, I am neglecting "level"
     stop_map.insert(std::make_pair<std::string_view, stop_place>(
         id, {id, name, coords, quay_map}));
   }

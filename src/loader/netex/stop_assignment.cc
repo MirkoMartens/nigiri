@@ -12,6 +12,7 @@ void read_stop_assignments(
         sa.node().child("ScheduledStopPointRef").attribute("ref").value();
     auto sp_ref = sa.node().child("StopPlaceRef").attribute("ref").value();
 
+    // TODO HERE: POTENTIALLY MERGE INTO ONE LOCATION STRUCT?
     stop_assignment_map.try_emplace(id, stop_assignment{id, ssp_ref, sp_ref});
   }
 }
