@@ -59,7 +59,8 @@ void handle_xml_parse_result(timetable& tt,
   read_scheduled_stop_points(doc, netex_tt.stops_map);
   read_service_links(doc, netex_tt.service_links_map);
   read_site_connections(tt, doc, netex_tt.connection_map);
-  read_stop_assignments(doc, netex_tt.stop_assignment_map);
+  read_stop_assignments(doc, netex_tt.stop_assignment_map, netex_tt.stop_places,
+                        netex_tt.stops_map, tt);
   read_journey_patterns(doc, netex_tt.journey_patterns, netex_tt.line_map,
                         netex_tt.stops_map);
 

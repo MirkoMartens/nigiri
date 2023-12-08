@@ -25,14 +25,7 @@ add_custom_command(
         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/gtfs-realtime.proto
         COMMENT "Generating GTFS RT protocol buffers C++ code"
 )
-add_library(gtfsrt ${CMAKE_CURRENT_BINARY_DIR}/generated/gtfsrt/gtfs-realtime.pb.cc
-        include/nigiri/loader/netex/stop_place.h
-        include/nigiri/loader/netex/line.h
-        include/nigiri/loader/netex/service_journey_pattern.h
-        include/nigiri/loader/netex/scheduled_stop_point.h
-        include/nigiri/loader/netex/service_journey.h
-        include/nigiri/loader/netex/service_link.h
-        include/nigiri/loader/netex/stop_assignment.h)
+add_library(gtfsrt ${CMAKE_CURRENT_BINARY_DIR}/generated/gtfsrt/gtfs-realtime.pb.cc)
 target_compile_features(gtfsrt PUBLIC cxx_std_23)
 target_include_directories(gtfsrt SYSTEM PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/generated)
 target_link_libraries(gtfsrt protobuf::libprotobuf)
@@ -84,16 +77,7 @@ endif ()
 
 # --- LIB ---
 file(GLOB_RECURSE nigiri-files src/*.cc)
-add_library(nigiri ${nigiri-files}
-        src/loader/netex/stop_place.cc
-        src/loader/netex/line.cc
-        src/loader/netex/scheduled_stop_point.cc
-        src/loader/netex/service_journey_pattern.cc
-        src/loader/netex/service_journey.cc
-        src/loader/netex/site_connection.cc
-        include/nigiri/loader/netex/site_connection.h
-        src/loader/netex/service_link.cc
-        src/loader/netex/stop_assignment.cc)
+add_library(nigiri ${nigiri-files})
 target_include_directories(nigiri PUBLIC include)
 target_link_libraries(nigiri PUBLIC cista geo utl fmt date miniz date-tz wyhash unordered_dense gtfsrt pugixml)
 target_compile_features(nigiri PUBLIC cxx_std_23)
@@ -115,12 +99,6 @@ configure_file(
         ${CMAKE_CURRENT_BINARY_DIR}/generated/test_dir.h
 )
 file(GLOB_RECURSE nigiri-test-files test/*.cc)
-add_executable(nigiri-test ${nigiri-test-files}
-        test/loader/netex/resource_frame_test.cc
-        test/loader/netex/stop_place_test.cc
-        test/loader/netex/service_journey_pattern_test.cc
-        test/loader/netex/dummy.cc
-        test/loader/netex/load_timetable_test.cc
-)
+add_executable(nigiri-test ${nigiri-test-files})
 target_link_libraries(nigiri-test nigiri gtest ianatzdb-res nigiri-generated)
 target_compile_options(nigiri-test PRIVATE ${nigiri-compile-options})
