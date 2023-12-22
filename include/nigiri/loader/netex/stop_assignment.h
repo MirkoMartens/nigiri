@@ -15,6 +15,7 @@ struct stop_assignment {
 
 void read_stop_assignments(
     const pugi::xml_document& doc,
+    source_idx_t& src,
     hash_map<std::string_view, stop_assignment>& stop_assignment_map,
     hash_map<std::string_view, stop_place>& stop_map,
     hash_map<std::string_view, scheduled_stop_point>& ssp_map,

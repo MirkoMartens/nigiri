@@ -4,6 +4,7 @@ namespace nigiri::loader::netex {
 
 void read_stop_assignments(
     const pugi::xml_document& doc,
+    source_idx_t& src,
     hash_map<std::string_view, stop_assignment>& stop_assignment_map,
     hash_map<std::string_view, stop_place>& stop_map,
     hash_map<std::string_view, scheduled_stop_point>& ssp_map,
@@ -22,11 +23,10 @@ void read_stop_assignments(
 
     // 1. Create location for ssp/stop point
     auto empty_idx_vec = vector<location_idx_t>{};
-    const source_idx_t DUMMY_SOURCE_IDX = static_cast<source_idx_t>(1);
     location l{ssp.id_,
                ssp.name_,
                stop.coords_,
-               DUMMY_SOURCE_IDX,
+               src,
                location_type::kStation,
                location_idx_t::invalid(),
                timezone_idx_t::invalid(),
@@ -39,7 +39,7 @@ void read_stop_assignments(
     // Solution: HAVING MY OWN LOCATIONS MAP TO CHECK FOR DUPLICATES!!!
     for (auto const& quay_pair : stop.quays_) {
       auto quay = quay_pair.second;
-      location quay_loc(quay.id_, quay.name_, quay.coords_, DUMMY_SOURCE_IDX,
+      location quay_loc(quay.id_, quay.name_, quay.coords_, src,
                         location_type::kTrack, ssp_idx,
                         timezone_idx_t::invalid(), 0_minutes,
                         it_range{empty_idx_vec});

@@ -42,11 +42,11 @@ bool isDirectory(const char* filename) {
 // gradually build a timetable object
 void handle_xml_parse_result(timetable& tt,
                              pugi::xml_document& doc,
-                             netex_timetable& netex_tt) {
+                             netex_timetable& netex_tt,
+                             source_idx_t& src) {
 
   // 1. ResourceFrame -> Defines responsibilities, authorities etc
   read_resource_frame(tt, doc, netex_tt.operatorMap);
-  std::cout << netex_tt.timezones.size();  // todo delete
 
   // 2. ServiceCalendarFrame -> Defines the days when a connection is valid
   read_service_calendar(tt, doc, netex_tt.calendar, netex_tt.operating_periods);
@@ -59,8 +59,8 @@ void handle_xml_parse_result(timetable& tt,
   read_scheduled_stop_points(doc, netex_tt.stops_map);
   read_service_links(doc, netex_tt.service_links_map);
   read_site_connections(tt, doc, netex_tt.connection_map);
-  read_stop_assignments(doc, netex_tt.stop_assignment_map, netex_tt.stop_places,
-                        netex_tt.stops_map, tt);
+  read_stop_assignments(doc, src, netex_tt.stop_assignment_map,
+                        netex_tt.stop_places, netex_tt.stops_map, tt);
   read_journey_patterns(doc, netex_tt.journey_patterns, netex_tt.line_map,
                         netex_tt.stops_map);
 
@@ -94,6 +94,7 @@ void load_timetable(source_idx_t src, dir const& d, timetable& t) {
   hash_map<std::string_view, stop_assignment> stop_assignment_map{};
   hash_map<std::string_view, service_journey_pattern> journey_patterns{};
 
+  // This is just a struct to manage all the hash maps in one object
   utils::netex_timetable netex_tt{
       timezones,           operatorMap,       calendar,
       operating_periods,   stop_places,       line_map,
@@ -123,11 +124,10 @@ void load_timetable(source_idx_t src, dir const& d, timetable& t) {
         file.filename());
 
     // Step 4: Handle the parse result and build up the data structures
-    utils::handle_xml_parse_result(t, doc, netex_tt);
+    utils::handle_xml_parse_result(t, doc, netex_tt, src);
 
     // Step 5: Process the data structures in the same way as
     // gtfs/load_timetable.cc from line 106 on
-    std::cout << src;  // TODO DELETE
   }
 }
 

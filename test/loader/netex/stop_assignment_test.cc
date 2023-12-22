@@ -91,7 +91,9 @@ TEST(nigiri, stop_assignment) {
   hash_map<std::string_view, scheduled_stop_point> ssp_map;
   initialize_maps(stop_map, ssp_map);
 
-  read_stop_assignments(doc, stop_assignment_map, stop_map, ssp_map, tt);
+  source_idx_t DUMMY_SOURCE_IDX = static_cast<source_idx_t>(1);
+  read_stop_assignments(doc, DUMMY_SOURCE_IDX, stop_assignment_map, stop_map,
+                        ssp_map, tt);
   ASSERT_EQ(stop_assignment_map.size(), 3);
 
   auto first_stop_assignment = stop_assignment_map["Stop_Assignment_0"];
@@ -112,7 +114,9 @@ TEST(nigiri, stop_assignment_ssp_locations) {
   hash_map<std::string_view, scheduled_stop_point> ssp_map;
   initialize_maps(stop_map, ssp_map);
 
-  read_stop_assignments(doc, stop_assignment_map, stop_map, ssp_map, tt);
+  source_idx_t DUMMY_SOURCE_IDX = static_cast<source_idx_t>(1);
+  read_stop_assignments(doc, DUMMY_SOURCE_IDX, stop_assignment_map, stop_map,
+                        ssp_map, tt);
 
   // Step 3: Check whether the locations have been created correctly out of the
   // ssps and quays
